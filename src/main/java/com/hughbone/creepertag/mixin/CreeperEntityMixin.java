@@ -31,7 +31,7 @@ public abstract class CreeperEntityMixin extends HostileEntity implements Creepe
 
     @Shadow protected abstract void explode();
     @Unique private boolean isTagger = false;
-    @Unique private String spawnSource = "?";
+    @Unique private String spawnSource = "";
 
     protected CreeperEntityMixin(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
@@ -49,12 +49,21 @@ public abstract class CreeperEntityMixin extends HostileEntity implements Creepe
 
     @Override
     public void setSpawnSource(String sourceName) {
-        this.spawnSource = sourceName;
+        spawnSource = sourceName;
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
-    private void readnbt(NbtCompound nbt, CallbackInfo ci) {
+    private void readNbt(NbtCompound nbt, CallbackInfo ci) {
         isTagger = nbt.contains("creeper_tag");
+        if (nbt.contains("spawn_source") && spawnSource.isEmpty()) {
+            spawnSource = nbt.getString("spawn_source");
+        }
+    }
+
+    @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+    private void writeNbt(NbtCompound nbt, CallbackInfo ci) {
+        nbt.putBoolean("creeper_tag", isTagger);
+        nbt.putString("spawn_source", spawnSource);
     }
 
     // Drop egg if attacked while holding diamond
