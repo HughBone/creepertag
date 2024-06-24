@@ -18,16 +18,8 @@
   "icon": "assets/creepertag/icon.png",
 
   "environment": "*",
-  "entrypoints": {
-    "main": [
-      "com.hughbone.creepertag.PlayerPig"
-    ]
-  },
   "mixins": [
-    {
-      "config": "playerpig.mixins.json",
-      "environment": "server"
-    }
+    "creepertag.mixins.json"
   ],
 
   "depends": {
