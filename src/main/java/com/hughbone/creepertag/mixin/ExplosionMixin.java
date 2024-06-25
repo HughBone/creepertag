@@ -4,6 +4,7 @@ import com.hughbone.creepertag.CreeperAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.util.math.Box;
@@ -51,6 +52,7 @@ public class ExplosionMixin {
             if (((CreeperAccessor) creeper).getIsTagger()) {
                 isTagger = true;
                 list.removeIf(e -> !(e instanceof LivingEntity));
+                list.removeIf(e -> e instanceof ArmorStandEntity);
             }
         }
 

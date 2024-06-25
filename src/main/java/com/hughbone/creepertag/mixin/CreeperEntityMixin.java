@@ -66,15 +66,17 @@ public abstract class CreeperEntityMixin extends HostileEntity implements Creepe
         nbt.putString("spawn_source", spawnSource);
     }
 
-    // Drop egg if attacked while holding diamond
+    // Drop egg if attacked while holding 2 diamond blocks
     @Inject(method = "getHurtSound", at = @At("HEAD"))
     private void injected(DamageSource source, CallbackInfoReturnable<SoundEvent> cir) {
         if (isTagger) return;
 
         if (source.getSource() instanceof ServerPlayerEntity player) {
             ItemStack handStack = player.getMainHandStack();
-            if (handStack.getItem().equals(Items.DIAMOND)) {
-                handStack.decrement(1);
+            if (handStack.getItem().equals(Items.DIAMOND_BLOCK)
+                && handStack.getCount() >= 2
+            ) {
+                handStack.decrement(2);
                 this.explode();
 
                 // Spawn egg nbt
