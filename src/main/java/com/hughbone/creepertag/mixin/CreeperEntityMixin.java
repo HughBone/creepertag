@@ -81,6 +81,7 @@ public abstract class CreeperEntityMixin extends HostileEntity implements Creepe
                 NbtCompound itemNbt = new NbtCompound();
                 NbtCompound nbtTags = new NbtCompound();
                 nbtTags.putBoolean("creeper_tag", true);
+                nbtTags.putBoolean("ignited", true);
                 itemNbt.put("EntityTag", nbtTags);
 
                 // Drop egg
